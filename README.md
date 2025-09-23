@@ -1,4 +1,6 @@
 # Hadoop word count, sort, search - Python
 
-This is the final project regarding the EEN474 (Cloud Computing) course taken in FA25 at NDU - Louaize.
+This is the final project regarding the EEN474 (Cloud Computing) course taken in FA25 at NDU - Louaize.<br/>
 Applied in this final project are conceptS of [INSERT MAIN IDEA WHEN DONE].<br/><br/>
+**Core Features:**<br/>
+UNDER CONSTRUCTION - PLEASE CHECK BACK LATER
