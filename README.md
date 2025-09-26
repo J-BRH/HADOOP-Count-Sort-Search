@@ -45,7 +45,7 @@ Check the installed Hadoop version by typing in CMD "hadoop" then "hadoop versio
 
 Hadoop should now be successfully installed on the host machine. Check the installed Hadoop version by typing in CMD "hadoop" then "hadoop version".<br/>‎ ‎ ‎ ‎ ‎ <br/>
 
-### ⚪ Linking Java & Hadoop
+### ⚪ Configuring Hadoop
 Head back to "C:\hadoop\etc\hadoop" and open the "core-site" XML file to edit with notepad. In the last "configuration" section, edit it to include HDFS as shown below:<br/>
 ```html
 <configuration>
