@@ -115,7 +115,7 @@ Open the new bin folder and run "winutils.exe". This will give an error based on
 <br/>
 💠 "hdfs namenode -format" to format the Hadoop namenode. [ONE TIME RUN]<br/>
 💠 "start-dfs.cmd" to start the namenode and datanode.<br/>
-💠 "start-yarn.cmd" to start yarn.<br/>
+💠 "start-yarn.cmd" to start Hadoop.<br/>
 
 **To visually check Cluster: Open Browser**
 <br/>
