@@ -110,7 +110,7 @@ Head back to "C:\hadoop\etc\hadoop" and open the "httpfs-site" XML file and the 
 <br/> **⭕IMPORTANT:** Hadoop is not configured to run on Windows by default. As such, head to your Hadoop directory "C:\hadoop" and delete the "bin" folder. Next, download the ZIP file uploaded to this GitHub repository containing the new bin folder, and place it inside "C:\hadoop".<br/>
 Open the new bin folder and run "winutils.exe". This will give an error based on what .dll files might be missing from the host machine. If any is missing, they must be downloaded from the Internet and placed into System32 "C:\Windows\System32" folder to successfully run Hadoop. Keep running the progtam until no other errors show.<br/><br/>
 
-### ⚪ Starting up Hadoop
+## Starting up Hadoop
 **Run CMD as Administrator:**
 <br/>
 💠 "hdfs namenode -format" to format the Hadoop namenode. [ONE TIME RUN]<br/>
@@ -121,7 +121,89 @@ Open the new bin folder and run "winutils.exe". This will give an error based on
 <br/>
 💠 "localhost:9870" to check namenode.<br/>
 💠 "localhost:9864" to check datanode.<br/>
-💠 "localhost:8088" to check Hadoop ressource manager.<br/>
+💠 "localhost:8088" to check Hadoop ressource manager.<br/><br/>
+
+## Uploading to HDFS:
+### ⚪ Data Files Upload<br/>
+1️⃣ Create a folder on your machine containing the data files to upload. Here, take [C:\hadoop\local_input] as an example path.<br/>
+2️⃣ Run in CMD: "hdfs dfs -mkdir /input" This will create a folder (directory) inside the HDFS to store the files.<br/>
+3️⃣ Run in CMD: "hdfs dfs -put C:/hadoop/local_input/DataFileName.txt /input" This will copy the file from the local machine to the newly created directory in the HDFS.<br/>
+
+**⭕HELPFUL NOTE:** To check directories in HDFS, either head to "localhost:9870" and in the "Utilities" tab -> Browse the File system, or run in CMD "hdfs dfs -ls /input" which will list all files in the /input directory.<br/><br/>
+
+### ⚪ Python Scripts Upload
+Since we are Streaming to Hadoop with Python, the code files must not be uploaded to HDFS, they stay on the local machine. The code will be available as a ZIP in this repository to make everyone's life easier :)<br/>
+⭕ Start Hadoop as usual, the cd into the folder containing the .py files, and run the jobs from there.<br/><br/>
+
+1️⃣ **Word Count Job:** <br/>
+```
+hadoop jar %HADOOP_HOME%\share\hadoop\tools\lib\hadoop-streaming-*.jar ^
+  -input /input ^
+  -output /wc_out ^
+  -mapper wc_mapper.py ^
+  -reducer wc_reducer.py ^
+  -file wc_mapper.py ^
+  -file wc_reducer.py
+```
+📤 **To Check Output:** <br/>
+```
+hdfs dfs -cat /wc_out/part-00000 | more
+```
+🔎 **Explanation:** <br/>
+hadoop jar ... hadoop-streaming-*.jar → runs the Hadoop Streaming JAR (lets you use Python instead of Java for MapReduce).<br/>
+-input /input → the directory in HDFS containing your text files.<br/>
+-output /wc_out → where Hadoop will store the results (must NOT exist beforehand).<br/>
+-mapper wc_mapper.py → your Python script that tokenizes words and outputs <word, 1>.<br/>
+-reducer wc_reducer.py → your reducer that sums counts per word.<br/>
+-file wc_mapper.py -file wc_reducer.py → ship these Python files to the cluster.<br/><br/>
+
+
+<br/> 2️⃣ **Sort By Count Job:** <br/>
+```
+hadoop jar %HADOOP_HOME%\share\hadoop\tools\lib\hadoop-streaming-*.jar ^
+  -input /wc_out ^
+  -output /sort_count_out ^
+  -mapper sort_by_count_mapper.py ^
+  -reducer sort_by_count_reducer.py ^
+  -file sort_by_count_mapper.py ^
+  -file sort_by_count_reducer.py
+
+```
+📤 **To Check Output:** <br/>
+```
+hdfs dfs -cat /sort_count_out/part-00000 | more
+```
+
+<br/><br/> 3️⃣ **Sort By Word Job:** <br/>
+```
+hadoop jar %HADOOP_HOME%\share\hadoop\tools\lib\hadoop-streaming-*.jar ^
+  -input /wc_out ^
+  -output /sort_word_out ^
+  -mapper sort_by_word_mapper.py ^
+  -reducer sort_by_word_reducer.py ^
+  -file sort_by_word_mapper.py ^
+  -file sort_by_word_reducer.py
+```
+📤 **To Check Output:** <br/>
+```
+hdfs dfs -cat /sort_word_out/part-00000 | more
+```
+
+<br/><br/> 4️⃣ **Word Search: "Hadoop"** <br/>
+```
+hadoop jar %HADOOP_HOME%\share\hadoop\tools\lib\hadoop-streaming-*.jar ^
+  -input /input ^
+  -output /search_out ^
+  -mapper "search_mapper.py hadoop" ^
+  -reducer search_reducer.py ^
+  -file search_mapper.py ^
+  -file search_reducer.py
+```
+📤 **To Check Output:** <br/>
+```
+hdfs dfs -cat /search_out/part-00000 | more
+```
+
 
 
 
