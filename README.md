@@ -1,7 +1,7 @@
 # Hadoop word count, sort, search - Python
 
 This is the final project regarding the EEN474 (Cloud Computing) course taken in FA25 at NDU - Louaize.<br/>
-Applied in this final project are concepts of [INSERT MAIN IDEA WHEN DONE].<br/><br/>
+Applied in this final project are concepts of cloud computing using Hadoop, understanding proper namenode and datanode usage with HDFS, and running python scripts for word count, sort, and search on a Hadoop Cluster.<br/><br/>
 **Main Features:**<br/>
 🔄️ Word Count.<br/>
 🔠 Word Sort.<br/>
@@ -113,15 +113,15 @@ Open the new bin folder and run "winutils.exe". This will give an error based on
 ### ⚪ Starting up Hadoop
 **Run CMD as Administrator:**
 <br/>
-💠 "hdfs namenode -format" to format the Hadoop namenode.<br/>
-💠 "cd \" back to root, then "cd hadoop", then "cd sbin".<br/>
+💠 "hdfs namenode -format" to format the Hadoop namenode. [ONE TIME RUN]<br/>
 💠 "start-dfs.cmd" to start the namenode and datanode.<br/>
 💠 "start-yarn.cmd" to start yarn.<br/>
 
 **To visually check Cluster: Open Browser**
 <br/>
-💠 "localhost:9870" to check status of hardware cluster, logs, and files uploaded in hdfs.<br/>
-💠 "localhost:8088" to check ressource manager.<br/>
+💠 "localhost:9870" to check namenode.<br/>
+💠 "localhost:9864" to check datanode.<br/>
+💠 "localhost:8088" to check Hadoop ressource manager.<br/>
 
 
 
